@@ -7,16 +7,17 @@
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
 
+import json
+
 # Phantom App imports
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
+import requests
+from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
 from abnormalsecurity_consts import *
-import requests
-import json
-from bs4 import BeautifulSoup
 
 
 class RetVal(tuple):
@@ -62,8 +63,12 @@ class AbnormalSecurityConnector(BaseConnector):
 
                 parameter = int(parameter)
             except Exception as ex:
-                return action_result.set_status(phantom.APP_ERROR,
-                                                "{}: {}".format(ABNORMAL_INVALID_INTEGER_MESSAGE.format(param=key), self._get_error_message_from_exception(ex))), None
+                return action_result.set_status(
+                    phantom.APP_ERROR,
+                    "{}: {}".format(
+                        ABNORMAL_INVALID_INTEGER_MESSAGE.format(param=key),
+                        self._get_error_message_from_exception(ex))
+                ), None
 
             if key == 'Limit' and parameter == -1:
                 return phantom.APP_SUCCESS, parameter
