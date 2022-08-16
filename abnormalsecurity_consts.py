@@ -10,4 +10,4 @@ ABNORMAL_INVALID_INTEGER_MESSAGE = "Please provide a valid integer value in the 
 # endpoints
 ABNORMAL_GET_THREATS = "/threats"
 ABNORMAL_GET_ABUSE_MAILBOX = "/abusecampaigns"
-ABNORMAL_GET_ACTION_STATUS = "/actions"
+ABNORMAL_GET_ACTION_STATUS = "actions"

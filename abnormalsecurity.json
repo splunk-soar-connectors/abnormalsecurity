@@ -15,7 +15,7 @@
     "utctime_updated": "2022-07-20T08:37:32.884231Z",
     "package_name": "phantom_abnormalsecurity",
     "main_module": "abnormalsecurity_connector.py",
-    "min_phantom_version": "5.3.0.84310",
+    "min_phantom_version": "5.3.3",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "url": {
@@ -111,6 +111,10 @@
                     "example_values": [
                         "Fetched data successfully"
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -420,6 +424,10 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "summary.total_objects",
                     "data_type": "numeric",
                     "example_values": [
@@ -489,6 +497,10 @@
                     "example_values": [
                         10
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -571,9 +583,7 @@
                     ],
                     "contains": [
                         "url"
-                    ],
-                    "column_order": 1,
-                    "column_name": "Status Url"
+                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -587,7 +597,9 @@
                     "data_type": "string",
                     "example_values": [
                         "unremediate"
-                    ]
+                    ],
+                    "column_name": "Action",
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.parameter.threat_id",
@@ -597,7 +609,13 @@
                     ],
                     "contains": [
                         "abnormal threat id"
-                    ]
+                    ],
+                    "column_name": "Threat ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -664,14 +682,18 @@
                     "data_type": "string",
                     "example_values": [
                         "done"
-                    ]
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.description",
                     "data_type": "string",
                     "example_values": [
                         "The request was completed successfully"
-                    ]
+                    ],
+                    "column_name": "Description",
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.message",
@@ -699,6 +721,10 @@
                     "contains": [
                         "abnormal threat id"
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",

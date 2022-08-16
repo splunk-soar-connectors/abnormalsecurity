@@ -42,13 +42,15 @@ class AbnormalSecurityConnector(BaseConnector):
         """ Automatically called by the BaseConnector before the calls to the handle_action function"""
         config = self.get_config()
 
-        # The headers, initialize them here once and use them for all other REST calls
-        self._headers = {'Content-Type': 'application/json'}
-
-        # self.set_validator('ipv6', self._is_ip)
         # Base URL
-        self._base_url = config[ABNORMAL_JSON_URL_OAuth].rstrip('/')
+        self._base_url = config[ABNORMAL_JSON_URL_OAuth].rstrip('/').replace('\\', '/')
         self._basic_auth_token = config[ABNORMAL_AUTHORIZATION_TOKEN]
+
+        # The headers, initialize them here once and use them for all other REST calls
+        self._headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {0}'.format(self._basic_auth_token)
+        }
 
         return phantom.APP_SUCCESS
 
@@ -206,14 +208,7 @@ class AbnormalSecurityConnector(BaseConnector):
 
         resp_json = None
         if not headers:
-            headers = {}
-
-        headers.update({
-            'Authorization': 'Bearer {0}'.format(self._basic_auth_token)
-        })
-
-        if not headers.get('Content-Type'):
-            headers['Content-Type'] = 'application/json'
+            headers = self._headers
 
         # Create a URL to connect to
         url = "{0}{1}".format(self._base_url, endpoint)
@@ -231,7 +226,7 @@ class AbnormalSecurityConnector(BaseConnector):
 
         return self._process_response(r, action_result)
 
-    def _hunt_paginator(self, action_result, endpoint, params, key):
+    def _paginator(self, action_result, endpoint, params, key):
         resp = {}
         api_params = {}
 
@@ -273,47 +268,54 @@ class AbnormalSecurityConnector(BaseConnector):
             api_params["pageNumber"] = response["nextPageNumber"]
 
     def _handle_list_threats(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        resp = self._hunt_paginator(action_result, ABNORMAL_GET_THREATS, param, "threats")
+        resp = self._paginator(action_result, ABNORMAL_GET_THREATS, param, "threats")
         if resp is None:
             return action_result.get_status()
 
         if not resp["threats"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No data Found")
+            return action_result.set_status(phantom.APP_SUCCESS, "No threats found")
 
+        self.debug_print("Threats found successfully")
         [action_result.add_data(threat) for threat in resp["threats"]]
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Fetched data successfully")
+        return action_result.set_status(phantom.APP_SUCCESS, "Threats found: {}".format(len(resp["threats"])))
 
     def _handle_get_threat_details(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        resp = self._hunt_paginator(action_result, ABNORMAL_GET_THREATS, param, "messages")
-        self.debug_print("resp: {}".format(resp))
+        resp = self._paginator(action_result, ABNORMAL_GET_THREATS, param, "messages")
         if resp is None:
             return action_result.get_status()
 
         if not resp["messages"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No data Found")
+            return action_result.set_status(phantom.APP_SUCCESS, "No threat details found")
 
+        self.debug_print("Threats details found successfully")
         [action_result.add_data(threat_message) for threat_message in resp["messages"]]
+
         return action_result.set_status(phantom.APP_SUCCESS, "Fetched threat data successfully")
 
     def _handle_list_abuse_mailboxes(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        resp = self._hunt_paginator(action_result, ABNORMAL_GET_ABUSE_MAILBOX, param, "campaigns")
+        resp = self._paginator(action_result, ABNORMAL_GET_ABUSE_MAILBOX, param, "campaigns")
         if resp is None:
             return action_result.get_status()
 
         if not resp["campaigns"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No data Found")
+            return action_result.set_status(phantom.APP_SUCCESS, "No abuse mailboxes found")
 
+        self.debug_print("Mails found successfully")
         [action_result.add_data(campaign) for campaign in resp["campaigns"]]
-        return action_result.set_status(phantom.APP_SUCCESS, "Fetched abuse mailbox data successfully")
+        return action_result.set_status(phantom.APP_SUCCESS, "Abuse mailboxes found: {}".format(len(resp["campaigns"])))
 
     def _handle_update_threat_status(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if param["action"] not in ["remediate", "unremediate"]:
@@ -328,17 +330,20 @@ class AbnormalSecurityConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
+        self.debug_print("Threat status updated")
         action_result.add_data(resp)
         return action_result.set_status(phantom.APP_SUCCESS, "Status updated to {} successfully".format(param.get("action")))
 
     def _handle_get_threat_status(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        endpoint = "{}/{}{}/{}".format(ABNORMAL_GET_THREATS, param.get("threat_id"), ABNORMAL_GET_ACTION_STATUS, param.get("action_id"))
+        endpoint = "{}/{}/{}/{}".format(ABNORMAL_GET_THREATS, param.get("threat_id"), ABNORMAL_GET_ACTION_STATUS, param.get("action_id"))
         ret_val, resp = self._make_rest_call(action_result, endpoint)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
+        self.debug_print("Status found for given threat")
         action_result.add_data(resp)
         return action_result.set_status(phantom.APP_SUCCESS, "Fetched status successfully")
 
