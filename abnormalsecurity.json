@@ -1,13 +1,14 @@
 {
     "appid": "c3b48516-11cc-44b6-ba42-ef44e8fb28eb",
     "name": "Abnormal Security",
-    "description": "This app integrated with Abnormal Security and enabled for real-time detection of malicious emails.",
+    "description": "This app integrated with Abnormal Security and enabled for real-time detection of malicious emails",
     "type": "endpoint",
     "product_vendor": "Abnormal Security",
     "logo": "abnormalsecurity.svg",
     "logo_dark": "abnormalsecurity_dark.svg",
     "product_name": "Abnormal Security",
     "python_version": "3",
+    "fips_compliant": true,
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) Splunk, 2022",
@@ -23,17 +24,13 @@
             "order": 0,
             "description": "Base URL",
             "required": true,
-            "default": "https://api.abnormalplatform.com/v1",
-            "name": "url",
-            "id": 0
+            "default": "https://api.abnormalplatform.com/v1"
         },
         "access_token": {
             "data_type": "password",
             "order": 1,
-            "description": "access_token",
-            "required": true,
-            "name": "access_token",
-            "id": 1
+            "description": "Access Token",
+            "required": true
         }
     },
     "actions": [
@@ -51,7 +48,6 @@
             "action": "list threats",
             "identifier": "list_threats",
             "description": "Fetch list of threat IDs which are in threat log",
-            "verbose": "This action fetches threats using pagination logic.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -109,7 +105,8 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Fetched data successfully"
+                        "Threats found",
+                        "No threats found"
                     ]
                 },
                 {
@@ -136,9 +133,8 @@
         {
             "action": "get threat details",
             "identifier": "get_threat_details",
-            "description": "List threat details with given threat ID.",
-            "verbose": "This action fetches threat messages using pagination logic.",
-            "type": "generic",
+            "description": "List threat details with given threat ID",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "threat_id": {
@@ -156,7 +152,7 @@
                     "data_type": "numeric",
                     "description": "Limit the number of results to return",
                     "required": false,
-                    "order": 0,
+                    "order": 1,
                     "default": 100,
                     "name": "limit"
                 }
@@ -261,7 +257,7 @@
                     "data_path": "action_result.data.*.fromAddress",
                     "data_type": "string",
                     "example_values": [
-                        "gstunts@gmail.com"
+                        "test@test.com"
                     ],
                     "contains": [
                         "email"
@@ -273,7 +269,7 @@
                     "data_path": "action_result.data.*.toAddresses",
                     "data_type": "string",
                     "example_values": [
-                        "mberry@a1dumping.com"
+                        "test@test.com"
                     ],
                     "contains": [
                         "email"
@@ -448,7 +444,6 @@
             "action": "list abuse mailboxes",
             "identifier": "list_abuse_mailboxes",
             "description": "Fetch list of abuse mailbox IDs",
-            "verbose": "This action fetches abuse mailbox IDs using pagination logic.",
             "type": "generic",
             "read_only": true,
             "parameters": {
@@ -488,7 +483,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Fetched abuse mailbox data successfully"
+                        "Abuse mailboxes found"
                     ]
                 },
                 {
@@ -539,7 +534,7 @@
                 },
                 "action": {
                     "data_type": "string",
-                    "description": "remediate/unremediate action",
+                    "description": "Action to update status for threat",
                     "value_list": [
                         "remediate",
                         "unremediate"
@@ -748,5 +743,37 @@
     "version": 1,
     "appname": "-",
     "executable": "spawn3",
-    "disabled": false
+    "disabled": false,
+    "pip_dependencies": {
+        "wheel": [
+            {
+                "module": "beautifulsoup4",
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
+            },
+            {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2022.6.15-py3-none-any.whl"
+            },
+            {
+                "module": "charset_normalizer",
+                "input_file": "wheels/py3/charset_normalizer-2.0.12-py3-none-any.whl"
+            },
+            {
+                "module": "idna",
+                "input_file": "wheels/py3/idna-3.3-py3-none-any.whl"
+            },
+            {
+                "module": "requests",
+                "input_file": "wheels/shared/requests-2.26.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "soupsieve",
+                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
+            },
+            {
+                "module": "urllib3",
+                "input_file": "wheels/shared/urllib3-1.26.11-py2.py3-none-any.whl"
+            }
+        ]
+    }
 }

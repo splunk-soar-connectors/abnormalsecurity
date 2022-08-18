@@ -1,8 +1,18 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-# -----------------------------------------
-# Phantom sample App Connector python file
-# -----------------------------------------
+# File: abnormalsecurity_connector.py
+#
+# Copyright (c) 2022 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+
 
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
@@ -218,13 +228,13 @@ class AbnormalSecurityConnector(BaseConnector):
             return RetVal(action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method)), resp_json)
 
         try:
-            r = request_func(url, json=json_data, data=data, headers=headers, params=params)
+            resp_json = request_func(url, json=json_data, data=data, headers=headers, params=params)
         except Exception as e:
             return action_result.set_status(
                 phantom.APP_ERROR, "Error connecting to server. Details: {0}".format
                 (self._get_error_message_from_exception(e))), resp_json
 
-        return self._process_response(r, action_result)
+        return self._process_response(resp_json, action_result)
 
     def _paginator(self, action_result, endpoint, params, key):
         resp = {}
