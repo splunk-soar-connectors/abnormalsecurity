@@ -237,43 +237,37 @@ class AbnormalSecurityConnector(BaseConnector):
         return self._process_response(resp_json, action_result)
 
     def _paginator(self, action_result, endpoint, params, key):
-        resp = {}
+        custom_resp = {}
         api_params = {}
 
-        resp[key] = []
+        custom_resp[key] = []
         if key == "messages":
             endpoint = "{}/{}".format(endpoint, params.get("threat_id"))
-            resp["threatId"] = params.get("threat_id")
+            custom_resp["threatId"] = params.get("threat_id")
 
-        limit = 1000
-        if "limit" in params:
-            ret_val, limit = self._validate_integer(action_result, params.pop("limit"), "Limit")
-            if phantom.is_fail(ret_val):
-                return None
+        ret_val, limit = self._validate_integer(action_result, params.pop("limit"), "Limit")
+        if phantom.is_fail(ret_val):
+            return None
 
-        if limit >= 1000:
-            page_size = 1000
-        else:
-            page_size = limit
-
-        api_params["pageSize"] = page_size
+        # set default page_size
+        api_params["pageSize"] = 1000
         while True:
             ret_val, response = self._make_rest_call(action_result, endpoint, params=api_params)
             if phantom.is_fail(ret_val):
                 return None
 
             if not response[key]:
-                return resp
+                return custom_resp
 
             if len(response[key]) >= limit:
-                resp[key].extend(response[key][:limit])
-                return resp
+                custom_resp[key].extend(response[key][:limit])
+                return custom_resp
 
-            resp[key].extend(response[key])
+            custom_resp[key].extend(response[key])
             limit -= 1000
 
             if "nextPageNumber" not in response:
-                return resp
+                return custom_resp
 
             api_params["pageNumber"] = response["nextPageNumber"]
 

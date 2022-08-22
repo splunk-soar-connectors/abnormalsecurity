@@ -633,7 +633,7 @@
             "action": "get threat status",
             "identifier": "get_threat_status",
             "description": "Fetch a status of threat",
-            "verbose": "This action needs action ID from update threat status action",
+            "verbose": "This action needs action ID from update threat status action.",
             "type": "generic",
             "read_only": true,
             "parameters": {
