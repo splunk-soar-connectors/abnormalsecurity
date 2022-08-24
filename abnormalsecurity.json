@@ -1,7 +1,7 @@
 {
     "appid": "c3b48516-11cc-44b6-ba42-ef44e8fb28eb",
     "name": "Abnormal Security",
-    "description": "This app integrated with Abnormal Security and enabled for real-time detection of malicious emails",
+    "description": "This app integrates with Abnormal Security to support various generic and investigative actions",
     "type": "endpoint",
     "product_vendor": "Abnormal Security",
     "logo": "abnormalsecurity.svg",
@@ -18,6 +18,9 @@
     "main_module": "abnormalsecurity_connector.py",
     "min_phantom_version": "5.3.3",
     "app_wizard_version": "1.0.0",
+    "latest_tested_versions": [
+        "App Tested On July 25 2022"
+    ],
     "configuration": {
         "url": {
             "data_type": "string",
@@ -53,8 +56,7 @@
             "parameters": {
                 "limit": {
                     "data_type": "numeric",
-                    "description": "Limit the number of results to return",
-                    "required": false,
+                    "description": "Limit the number of results to return (Default 100)",
                     "default": 100,
                     "order": 0,
                     "name": "limit"
@@ -102,16 +104,15 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Threats found",
-                        "No threats found"
+                        "Threats found"
                     ]
-                },
-                {
-                    "data_path": "action_result.summary",
-                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -150,8 +151,7 @@
                 },
                 "limit": {
                     "data_type": "numeric",
-                    "description": "Limit the number of results to return",
-                    "required": false,
+                    "description": "Limit the number of results to return (Default 100)",
                     "order": 1,
                     "default": 100,
                     "name": "limit"
@@ -179,103 +179,14 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.urls",
-                    "data_type": "string",
-                    "example_values": [
-                        "https://mailinc.yolasite.com/"
-                    ],
-                    "contains": [
-                        "url"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.isRead",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.subject",
-                    "data_type": "string",
-                    "example_values": [
-                        "book a time in my calendar"
-                    ],
-                    "column_order": 1,
-                    "column_name": "Subject"
-                },
-                {
-                    "data_path": "action_result.data.*.fromName",
-                    "data_type": "string",
-                    "example_values": [
-                        "me"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.sentTime",
-                    "data_type": "string",
-                    "example_values": [
-                        "2022-07-26T06:22:52Z"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.threatId",
+                    "data_path": "action_result.parameter.threat_id",
                     "data_type": "string",
                     "example_values": [
                         "3af22dcf-72ff-eedb-c638-f982776e2bfe"
                     ],
                     "contains": [
                         "abnormal threat id"
-                    ],
-                    "column_order": 0,
-                    "column_name": "Threat Id"
-                },
-                {
-                    "data_path": "action_result.data.*.urlCount",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
                     ]
-                },
-                {
-                    "data_path": "action_result.data.*.attackType",
-                    "data_type": "string",
-                    "example_values": [
-                        "Phishing: Credential"
-                    ],
-                    "column_order": 4,
-                    "column_name": "Attack Type"
-                },
-                {
-                    "data_path": "action_result.data.*.returnPath",
-                    "data_type": "string",
-                    "example_values": [
-                        "gstunts@gmail.com"
-                    ],
-                    "contains": [
-                        "email"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.fromAddress",
-                    "data_type": "string",
-                    "example_values": [
-                        "test@test.com"
-                    ],
-                    "contains": [
-                        "email"
-                    ],
-                    "column_order": 2,
-                    "column_name": "From Address"
-                },
-                {
-                    "data_path": "action_result.data.*.toAddresses",
-                    "data_type": "string",
-                    "example_values": [
-                        "test@test.com"
-                    ],
-                    "contains": [
-                        "email"
-                    ],
-                    "column_order": 3,
-                    "column_name": "To Address"
                 },
                 {
                     "data_path": "action_result.data.*.abxMessageId",
@@ -295,34 +206,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.attackVector",
-                    "data_type": "string",
+                    "data_path": "action_result.data.*.attachmentCount",
+                    "data_type": "numeric",
                     "example_values": [
-                        "Link"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.receivedTime",
-                    "data_type": "string",
-                    "example_values": [
-                        "2022-07-26T06:23:08Z"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.senderDomain",
-                    "data_type": "string",
-                    "example_values": [
-                        "gmail.com"
-                    ],
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.attackedParty",
-                    "data_type": "string",
-                    "example_values": [
-                        "VIP"
+                        0
                     ]
                 },
                 {
@@ -333,48 +220,52 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.attackType",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phishing: Credential"
+                    ],
+                    "column_order": 4,
+                    "column_name": "Attack Type"
+                },
+                {
+                    "data_path": "action_result.data.*.attackVector",
+                    "data_type": "string",
+                    "example_values": [
+                        "Link"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.attackedParty",
+                    "data_type": "string",
+                    "example_values": [
+                        "VIP"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.autoRemediated",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.postRemediated",
-                    "data_type": "numeric",
-                    "example_values": [
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.attachmentCount",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.senderIpAddress",
+                    "data_path": "action_result.data.*.fromAddress",
                     "data_type": "string",
                     "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.summaryInsights",
-                    "data_type": "string",
-                    "example_values": [
-                        "Unusual Sender"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.recipientAddress",
-                    "data_type": "string",
-                    "example_values": [
-                        "mberry@a1dumping.com"
+                        "test@test.com"
                     ],
                     "contains": [
                         "email"
+                    ],
+                    "column_order": 2,
+                    "column_name": "From Address"
+                },
+                {
+                    "data_path": "action_result.data.*.fromName",
+                    "data_type": "string",
+                    "example_values": [
+                        "me"
                     ]
                 },
                 {
@@ -392,6 +283,34 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.isRead",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.postRemediated",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.receivedTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2022-07-26T06:23:08Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recipientAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@test.com"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.remediationStatus",
                     "data_type": "string",
                     "example_values": [
@@ -403,25 +322,103 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.message",
+                    "data_path": "action_result.data.*.returnPath",
                     "data_type": "string",
                     "example_values": [
-                        "Fetched threat data successfully"
+                        "gstunts@gmail.com"
+                    ],
+                    "contains": [
+                        "email"
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.threat_id",
+                    "data_path": "action_result.data.*.senderDomain",
+                    "data_type": "string",
+                    "example_values": [
+                        "gmail.com"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.senderIpAddress",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.sentTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2022-07-26T06:22:52Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.subject",
+                    "data_type": "string",
+                    "example_values": [
+                        "book a time in my calendar"
+                    ],
+                    "column_order": 1,
+                    "column_name": "Subject"
+                },
+                {
+                    "data_path": "action_result.data.*.summaryInsights",
+                    "data_type": "string",
+                    "example_values": [
+                        "Unusual Sender"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatId",
                     "data_type": "string",
                     "example_values": [
                         "3af22dcf-72ff-eedb-c638-f982776e2bfe"
                     ],
                     "contains": [
                         "abnormal threat id"
+                    ],
+                    "column_order": 0,
+                    "column_name": "Threat ID"
+                },
+                {
+                    "data_path": "action_result.data.*.toAddresses",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@test.com"
+                    ],
+                    "contains": [
+                        "email"
+                    ],
+                    "column_order": 3,
+                    "column_name": "To Address"
+                },
+                {
+                    "data_path": "action_result.data.*.urlCount",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.urls",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://mailinc.yolasite.com/"
+                    ],
+                    "contains": [
+                        "url"
                     ]
                 },
                 {
                     "data_path": "action_result.summary",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Fetched threat data successfully"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -449,8 +446,7 @@
             "parameters": {
                 "limit": {
                     "data_type": "numeric",
-                    "description": "Limit the number of results to return",
-                    "required": false,
+                    "description": "Limit the number of results to return (Default 100)",
                     "order": 0,
                     "name": "limit",
                     "default": 100
@@ -470,23 +466,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.campaignId",
-                    "data_type": "string",
-                    "example_values": [
-                        "fff51768-c446-34e1-97a8-9802c29c3ebd",
-                        "69f92401-4f93-32f2-87ba-06fe66c4a7bd"
-                    ],
-                    "column_name": "Campaign Id",
-                    "column_order": 0
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Abuse mailboxes found"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.limit",
                     "data_type": "numeric",
                     "example_values": [
@@ -494,8 +473,24 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.campaignId",
+                    "data_type": "string",
+                    "example_values": [
+                        "fff51768-c446-34e1-97a8-9802c29c3ebd"
+                    ],
+                    "column_name": "Campaign ID",
+                    "column_order": 0
+                },
+                {
                     "data_path": "action_result.summary",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Abuse mailboxes found"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -559,6 +554,29 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.parameter.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "remediate",
+                        "unremediate"
+
+                    ],
+                    "column_name": "Action",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.parameter.threat_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "ecfaa385-a6e8-49af-42ba-9c5fc0e66ade"
+                    ],
+                    "contains": [
+                        "abnormal threat id"
+                    ],
+                    "column_name": "Threat ID",
+                    "column_order": 1
+                },
+                {
                     "data_path": "action_result.data.*.action_id",
                     "data_type": "string",
                     "example_values": [
@@ -581,36 +599,15 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
                         "Status updated to unremediate successfully"
                     ]
-                },
-                {
-                    "data_path": "action_result.parameter.action",
-                    "data_type": "string",
-                    "example_values": [
-                        "unremediate"
-                    ],
-                    "column_name": "Action",
-                    "column_order": 2
-                },
-                {
-                    "data_path": "action_result.parameter.threat_id",
-                    "data_type": "string",
-                    "example_values": [
-                        "ecfaa385-a6e8-49af-42ba-9c5fc0e66ade"
-                    ],
-                    "contains": [
-                        "abnormal threat id"
-                    ],
-                    "column_name": "Threat ID",
-                    "column_order": 1
-                },
-                {
-                    "data_path": "action_result.summary",
-                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -673,31 +670,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "done"
-                    ],
-                    "column_name": "Status",
-                    "column_order": 0
-                },
-                {
-                    "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        "The request was completed successfully"
-                    ],
-                    "column_name": "Description",
-                    "column_order": 1
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Fetched status successfully"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.action_id",
                     "data_type": "string",
                     "example_values": [
@@ -718,8 +690,33 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": [
+                        "The request was completed successfully"
+                    ],
+                    "column_name": "Description",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "done"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
                     "data_path": "action_result.summary",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Fetched status successfully"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",

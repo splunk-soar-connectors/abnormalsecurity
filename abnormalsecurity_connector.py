@@ -98,7 +98,7 @@ class AbnormalSecurityConnector(BaseConnector):
         :param action_result: object of Action Result
         :return: status phantom.APP_ERROR/phantom.APP_SUCCESS(along with appropriate message)
         """
-        if response.status_code == 200 or response.status_code == 202:
+        if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, "Status code: {}".format(response.status_code))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERR_EMPTY_RESPONSE.format(code=response.status_code)), None)
@@ -109,6 +109,9 @@ class AbnormalSecurityConnector(BaseConnector):
 
         try:
             soup = BeautifulSoup(response.text, "html.parser")
+            # Remove the script, style, footer and navigation part from the HTML message
+            for element in soup(["script", "style", "footer", "nav"]):
+                element.extract()
             error_text = soup.text
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
@@ -193,7 +196,7 @@ class AbnormalSecurityConnector(BaseConnector):
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
         except Exception as ex:
-            self.debug_print("Error occurred while retrieving exception information: {}".format(self._get_error_message_from_exception(ex)))
+            self.debug_print("Error occurred while retrieving exception information: {}".format(str(ex)))
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
@@ -228,7 +231,7 @@ class AbnormalSecurityConnector(BaseConnector):
             return RetVal(action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method)), resp_json)
 
         try:
-            resp_json = request_func(url, json=json_data, data=data, headers=headers, params=params)
+            resp_json = request_func(url, json=json_data, data=data, headers=headers, params=params, timeout=REQUEST_TIMEOUT)
         except Exception as e:
             return action_result.set_status(
                 phantom.APP_ERROR, "Error connecting to server. Details: {0}".format
@@ -239,15 +242,17 @@ class AbnormalSecurityConnector(BaseConnector):
     def _paginator(self, action_result, endpoint, params, key):
         custom_resp = {}
         api_params = {}
-
         custom_resp[key] = []
         if key == "messages":
             endpoint = "{}/{}".format(endpoint, params.get("threat_id"))
             custom_resp["threatId"] = params.get("threat_id")
 
-        ret_val, limit = self._validate_integer(action_result, params.pop("limit"), "Limit")
-        if phantom.is_fail(ret_val):
-            return None
+        if "limit" not in params:
+            limit = 100
+        else:
+            ret_val, limit = self._validate_integer(action_result, params.pop("limit"), "Limit")
+            if phantom.is_fail(ret_val):
+                return None
 
         # set default page_size
         api_params["pageSize"] = 1000
@@ -355,10 +360,7 @@ class AbnormalSecurityConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        if not param:
-            param = {}
-
-        param.update({"pageSize": 1})
+        param = {"pageSize": 1}
 
         self.save_progress("Connecting to endpoint")
         # make rest call
