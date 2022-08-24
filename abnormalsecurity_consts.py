@@ -1,4 +1,4 @@
-# File: abnormalsecurity_connector.py
+# File: abnormalsecurity_consts.py
 #
 # Copyright (c) 2022 Splunk Inc.
 #
@@ -20,7 +20,8 @@ ABNORMAL_AUTHORIZATION_TOKEN = "access_token"
 # responses
 ABNORMAL_ERR_EMPTY_RESPONSE = "Status Code {code}. Empty response and no information in the header"
 ABNORMAL_ERR_MSG_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters"
-ABNORMAL_INVALI_INTEGER_MESSAGE = "Please provide a valid integer value in the {key} parameter"
+ABNORMAL_INVALID_INTEGER_MESSAGE = "Please provide a valid integer value in the {key} parameter"
+REQUEST_TIMEOUT = 30
 
 # endpoints
 ABNORMAL_GET_THREATS = "/threats"

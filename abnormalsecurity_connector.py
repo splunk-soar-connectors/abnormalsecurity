@@ -98,7 +98,7 @@ class AbnormalSecurityConnector(BaseConnector):
         :param action_result: object of Action Result
         :return: status phantom.APP_ERROR/phantom.APP_SUCCESS(along with appropriate message)
         """
-        if response.status_code == 200 or response.status_code == 202:
+        if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, "Status code: {}".format(response.status_code))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERR_EMPTY_RESPONSE.format(code=response.status_code)), None)
@@ -109,6 +109,9 @@ class AbnormalSecurityConnector(BaseConnector):
 
         try:
             soup = BeautifulSoup(response.text, "html.parser")
+            # Remove the script, style, footer and navigation part from the HTML message
+            for element in soup(["script", "style", "footer", "nav"]):
+                element.extract()
             error_text = soup.text
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
@@ -193,7 +196,7 @@ class AbnormalSecurityConnector(BaseConnector):
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
         except Exception as ex:
-            self.debug_print("Error occurred while retrieving exception information: {}".format(self._get_error_message_from_exception(ex)))
+            self.debug_print("Error occurred while retrieving exception information: {}".format(str(ex)))
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
@@ -228,7 +231,7 @@ class AbnormalSecurityConnector(BaseConnector):
             return RetVal(action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method)), resp_json)
 
         try:
-            resp_json = request_func(url, json=json_data, data=data, headers=headers, params=params)
+            resp_json = request_func(url, json=json_data, data=data, headers=headers, params=params, timeout=REQUEST_TIMEOUT)
         except Exception as e:
             return action_result.set_status(
                 phantom.APP_ERROR, "Error connecting to server. Details: {0}".format
