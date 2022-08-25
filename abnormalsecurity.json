@@ -4,11 +4,11 @@
     "description": "This app integrates with Abnormal Security to support various generic and investigative actions",
     "type": "endpoint",
     "product_vendor": "Abnormal Security",
-    "logo": "abnormalsecurity.svg",
-    "logo_dark": "abnormalsecurity_dark.svg",
+    "logo": "logo_abnormalsecurity.svg",
+    "logo_dark": "logo_abnormalsecurity_dark.svg",
     "product_name": "Abnormal Security",
     "python_version": "3",
-    "fips_compliant": true,
+    "fips_compliant": false,
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022 Splunk Inc.",
@@ -19,7 +19,7 @@
     "min_phantom_version": "5.3.3",
     "app_wizard_version": "1.0.0",
     "latest_tested_versions": [
-        "App Tested On July 25 2022"
+        "Cloud, App Tested On July 25, 2022"
     ],
     "configuration": {
         "url": {
@@ -88,14 +88,14 @@
                     "data_path": "action_result.data",
                     "data_type": "string",
                     "example_values": [
-                        "3780494b-90c3-be27-93cb-cfdecdaeec9c"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.threatId",
                     "data_type": "string",
                     "example_values": [
-                        "3780494b-90c3-be27-93cb-cfdecdaeec9c"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ],
                     "column_name": "Threat ID",
                     "column_order": 0,
@@ -182,7 +182,7 @@
                     "data_path": "action_result.parameter.threat_id",
                     "data_type": "string",
                     "example_values": [
-                        "3af22dcf-72ff-eedb-c638-f982776e2bfe"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ],
                     "contains": [
                         "abnormal threat id"
@@ -192,14 +192,14 @@
                     "data_path": "action_result.data.*.abxMessageId",
                     "data_type": "numeric",
                     "example_values": [
-                        7125259002995890000
+                        1234569002995890000
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.abxPortalUrl",
                     "data_type": "string",
                     "example_values": [
-                        "https://portal.abnormalsecurity.com/home/threat-center/remediation-history/7125259002995890248"
+                        "https://portal.abnormalsecurity.com/home/threat-center/remediation-history/1234559002995890248"
                     ],
                     "contains": [
                         "url"
@@ -279,7 +279,7 @@
                     "data_path": "action_result.data.*.internetMessageId",
                     "data_type": "string",
                     "example_values": [
-                        "<CAKL+we=JEMH+pCxrvvFeHpx=Vto4TOZX0cB09GmLnugUZi7u6A@mail.gmail.com>"
+                        "<CAKL+we=ABCD+pCxrvvFeHpx=Vto4TOZX0cB09GmLnugUZi7u6A@mail.gmail.com>"
                     ]
                 },
                 {
@@ -325,7 +325,7 @@
                     "data_path": "action_result.data.*.returnPath",
                     "data_type": "string",
                     "example_values": [
-                        "gstunts@gmail.com"
+                        "test@test.com"
                     ],
                     "contains": [
                         "email"
@@ -335,7 +335,7 @@
                     "data_path": "action_result.data.*.senderDomain",
                     "data_type": "string",
                     "example_values": [
-                        "gmail.com"
+                        "test.com"
                     ],
                     "contains": [
                         "domain"
@@ -372,7 +372,7 @@
                     "data_path": "action_result.data.*.threatId",
                     "data_type": "string",
                     "example_values": [
-                        "3af22dcf-72ff-eedb-c638-f982776e2bfe"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ],
                     "contains": [
                         "abnormal threat id"
@@ -568,7 +568,7 @@
                     "data_path": "action_result.parameter.threat_id",
                     "data_type": "string",
                     "example_values": [
-                        "ecfaa385-a6e8-49af-42ba-9c5fc0e66ade"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ],
                     "contains": [
                         "abnormal threat id"
@@ -683,7 +683,7 @@
                     "data_path": "action_result.parameter.threat_id",
                     "data_type": "string",
                     "example_values": [
-                        "ecfaa385-a6e8-49af-42ba-9c5fc0e66ade"
+                        "1234567b-90c3-be27-93cb-cfdecabcde9a"
                     ],
                     "contains": [
                         "abnormal threat id"

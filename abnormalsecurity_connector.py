@@ -13,10 +13,6 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-
-# Python 3 Compatibility imports
-from __future__ import print_function, unicode_literals
-
 import json
 
 # Phantom App imports
@@ -196,7 +192,7 @@ class AbnormalSecurityConnector(BaseConnector):
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
         except Exception as ex:
-            self.debug_print("Error occurred while retrieving exception information: {}".format(str(ex)))
+            self.error_print("Error occurred while retrieving exception information: {}".format(str(ex)))
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
