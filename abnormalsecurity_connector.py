@@ -243,9 +243,6 @@ class AbnormalSecurityConnector(BaseConnector):
         custom_resp = {}
         api_params = {}
         custom_resp[key] = []
-        if key == "messages":
-            endpoint = "{}/{}".format(endpoint, params.get("threat_id"))
-            custom_resp["threatId"] = params.get("threat_id")
 
         if "limit" not in params:
             limit = 100
@@ -296,7 +293,7 @@ class AbnormalSecurityConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        resp = self._paginator(action_result, ABNORMAL_GET_THREATS, param, "messages")
+        resp = self._paginator(action_result, "{}/{}".format(ABNORMAL_GET_THREATS, param.get("threat_id")), param, "messages")
         if resp is None:
             return action_result.get_status()
 
