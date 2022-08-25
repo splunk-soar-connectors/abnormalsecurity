@@ -418,6 +418,7 @@ def main():
 
     username = args.username
     password = args.password
+    verify = args.verify
 
     if username is not None and password is None:
 
@@ -430,7 +431,7 @@ def main():
             login_url = AbnormalSecurityConnector._get_phantom_base_url() + '/login'
 
             print("Accessing the Login page")
-            r = requests.get(login_url, verify=False, timeout=REQUEST_TIMEOUT)
+            r = requests.get(login_url, verify=verify, timeout=REQUEST_TIMEOUT)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -443,7 +444,7 @@ def main():
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=False, data=data, headers=headers, timeout=REQUEST_TIMEOUT)
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=REQUEST_TIMEOUT)
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platform. Error: " + str(e))
