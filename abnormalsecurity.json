@@ -441,7 +441,7 @@
             "action": "list abuse mailboxes",
             "identifier": "list_abuse_mailboxes",
             "description": "Fetch list of abuse mailbox IDs",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "limit": {

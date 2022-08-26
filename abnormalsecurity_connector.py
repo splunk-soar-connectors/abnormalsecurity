@@ -248,7 +248,7 @@ class AbnormalSecurityConnector(BaseConnector):
                 return None
 
         # set default page_size
-        api_params["pageSize"] = 1000
+        api_params["pageSize"] = min(limit, 1000)
         while True:
             ret_val, response = self._make_rest_call(action_result, endpoint, params=api_params)
             if phantom.is_fail(ret_val):
@@ -277,13 +277,12 @@ class AbnormalSecurityConnector(BaseConnector):
         if resp is None:
             return action_result.get_status()
 
-        if not resp["threats"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No threats found")
+        action_result.set_summary({"total_threats": len(resp["threats"])})
 
         self.debug_print("Threats found successfully")
         [action_result.add_data(threat) for threat in resp["threats"]]
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Threats found: {}".format(len(resp["threats"])))
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_threat_details(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
@@ -293,13 +292,12 @@ class AbnormalSecurityConnector(BaseConnector):
         if resp is None:
             return action_result.get_status()
 
-        if not resp["messages"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No threat details found")
+        action_result.set_summary({"total_threat_details": len(resp["messages"])})
 
-        self.debug_print("Threats details found successfully")
+        self.debug_print("Threat details found successfully")
         [action_result.add_data(threat_message) for threat_message in resp["messages"]]
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Fetched threat data successfully")
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_abuse_mailboxes(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
@@ -309,32 +307,32 @@ class AbnormalSecurityConnector(BaseConnector):
         if resp is None:
             return action_result.get_status()
 
-        if not resp["campaigns"]:
-            return action_result.set_status(phantom.APP_SUCCESS, "No abuse mailboxes found")
+        action_result.set_summary({"total_abuse_mailboxes": len(resp["campaigns"])})
 
-        self.debug_print("Mails found successfully")
+        self.debug_print("Mailboxes found successfully")
         [action_result.add_data(campaign) for campaign in resp["campaigns"]]
-        return action_result.set_status(phantom.APP_SUCCESS, "Abuse mailboxes found: {}".format(len(resp["campaigns"])))
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_update_threat_status(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        if param["action"] not in ["remediate", "unremediate"]:
-            return action_result.set_status(phantom.APP_ERROR, "Invalid action is given"), None
+        action_status = param.get('action')
+        if action_status not in ["remediate", "unremediate"]:
+            return action_result.set_status(phantom.APP_ERROR, "Invalid action is given")
         endpoint = "{threats}/{threatid}".format(threats=ABNORMAL_GET_THREATS, threatid=param.get("threat_id"))
 
         data = {
-            "action": param.get("action")
+            "action": action_status
         }
 
         ret_val, resp = self._make_rest_call(action_result, endpoint, json_data=data, method="post")
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        self.debug_print("Threat status updated")
+        self.debug_print("Action created for update status")
         action_result.add_data(resp)
-        return action_result.set_status(phantom.APP_SUCCESS, "Status updated to {} successfully".format(param.get("action")))
+        return action_result.set_status(phantom.APP_SUCCESS, "Created action for update threat status successfully")
 
     def _handle_get_threat_status(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
@@ -360,7 +358,7 @@ class AbnormalSecurityConnector(BaseConnector):
         ret_val, response = self._make_rest_call(action_result, ABNORMAL_GET_THREATS, params=param)
 
         if phantom.is_fail(ret_val):
-            self.save_progress("Test Connectivity Failed.")
+            self.save_progress("Test Connectivity Failed")
             return action_result.get_status()
 
         self.save_progress("Test Connectivity Passed")
