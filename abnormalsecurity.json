@@ -160,7 +160,8 @@
             "render": {
                 "type": "table",
                 "width": 12,
-                "height": 10
+                "height": 10,
+                "title": "Threat Details"
             },
             "output": [
                 {
@@ -542,7 +543,8 @@
             "render": {
                 "type": "table",
                 "width": 20,
-                "height": 5
+                "height": 5,
+                "title": "Threat Status"
             },
             "output": [
                 {
@@ -658,7 +660,8 @@
                 }
             },
             "render": {
-                "type": "table"
+                "type": "table",
+                "title": "Threat Status"
             },
             "output": [
                 {
