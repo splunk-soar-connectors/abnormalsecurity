@@ -50,7 +50,7 @@
         {
             "action": "list threats",
             "identifier": "list_threats",
-            "description": "Fetch list of threat IDs which are in threat log",
+            "description": "Fetch the list of threat IDs which are in threat log",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -134,7 +134,7 @@
         {
             "action": "get threat details",
             "identifier": "get_threat_details",
-            "description": "List threat details with given threat ID",
+            "description": "List threat details with the given threat ID",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -285,7 +285,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.isRead",
-                    "data_type": "boolean"
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.postRemediated",
@@ -441,7 +445,7 @@
         {
             "action": "list abuse mailboxes",
             "identifier": "list_abuse_mailboxes",
-            "description": "Fetch list of abuse mailbox IDs",
+            "description": "Fetch the list of abuse mailbox IDs",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -513,7 +517,7 @@
         {
             "action": "update threat status",
             "identifier": "update_threat_status",
-            "description": "Change a status of threat with given threat ID",
+            "description": "Change the status of threat with given threat ID",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -631,9 +635,9 @@
         {
             "action": "get threat status",
             "identifier": "get_threat_status",
-            "description": "Fetch a status of threat",
-            "verbose": "This action needs action ID from update threat status action.",
-            "type": "generic",
+            "description": "Fetch the status of threat",
+            "verbose": "This action needs an action ID from update threat status action.",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "threat_id": {
@@ -649,7 +653,7 @@
                 },
                 "action_id": {
                     "data_type": "string",
-                    "description": "",
+                    "description": "A UUID representing the action",
                     "required": true,
                     "primary": true,
                     "order": 1,
