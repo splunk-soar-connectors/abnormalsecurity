@@ -97,7 +97,7 @@ class AbnormalSecurityConnector(BaseConnector):
         if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, "Status code: {}".format(response.status_code))
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERR_EMPTY_RESPONSE.format(code=response.status_code)), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERROR_EMPTY_RESPONSE.format(code=response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
         # An html response, treat it like an error
@@ -182,7 +182,7 @@ class AbnormalSecurityConnector(BaseConnector):
         """
 
         error_code = None
-        error_msg = ABNORMAL_ERR_MSG_UNAVAILABLE
+        error_msg = ABNORMAL_ERROR_MESSAGE_UNAVAILABLE
 
         try:
             if hasattr(e, "args"):
