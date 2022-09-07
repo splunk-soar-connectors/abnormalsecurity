@@ -176,6 +176,9 @@ class AbnormalSecurityConnector(BaseConnector):
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
+    def _dump_error_log(self, error, message="Exception occurred."):
+        self.error_print(message, dump_object=error)
+
     def _get_error_message_from_exception(self, e):
         """ This method is used to get appropriate error message from the exception.
         :param e: Exception object
@@ -194,7 +197,7 @@ class AbnormalSecurityConnector(BaseConnector):
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
         except Exception as ex:
-            self.error_print("Error occurred while retrieving exception information: {}".format(str(ex)))
+            self._dump_error_log(ex, "Error occurred while fetching exception information")
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
