@@ -14,6 +14,7 @@
 # and limitations under the License.
 
 import json
+import traceback
 
 # Phantom App imports
 import phantom.app as phantom
@@ -184,6 +185,7 @@ class AbnormalSecurityConnector(BaseConnector):
         error_code = None
         error_msg = ABNORMAL_ERROR_MESSAGE_UNAVAILABLE
 
+        self.error_print("Traceback: {}".format(traceback.format_stack()))
         try:
             if hasattr(e, "args"):
                 if len(e.args) > 1:
