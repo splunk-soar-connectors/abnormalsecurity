@@ -2,7 +2,7 @@
 # Abnormal Security
 
 Publisher: Splunk  
-Connector Version: 1\.0\.1  
+Connector Version: 1\.0\.2  
 Product Vendor: Abnormal Security  
 Product Name: Abnormal Security  
 Product Version Supported (regex): "\.\*"  
