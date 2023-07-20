@@ -2,11 +2,11 @@
 # Abnormal Security
 
 Publisher: Splunk  
-Connector Version: 1\.0\.2  
+Connector Version: 1.0.3  
 Product Vendor: Abnormal Security  
 Product Name: Abnormal Security  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.3\.0  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.3.0  
 
 This app integrates with Abnormal Security to support various generic and investigative actions
 
@@ -16,7 +16,7 @@ The below configuration variables are required for this Connector to operate.  T
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **url** |  required  | string | Base URL
-**access\_token** |  required  | password | Access Token
+**access_token** |  required  | password | Access Token
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
@@ -47,19 +47,19 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**limit** |  optional  | Limit the number of results to return \(Default 100\) | numeric | 
+**limit** |  optional  | Limit the number of results to return (Default 100) | numeric | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.limit | numeric | 
-action\_result\.data | string | 
-action\_result\.data\.\*\.threatId | string |  `abnormal threat id` 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.limit | numeric |  |   100 
+action_result.data | string |  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.data.\*.threatId | string |  `abnormal threat id`  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.summary | string |  |  
+action_result.message | string |  |   Threats found 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'get threat details'
 List threat details with the given threat ID
@@ -70,47 +70,47 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**threat\_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
-**limit** |  optional  | Limit the number of results to return \(Default 100\) | numeric | 
+**threat_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
+**limit** |  optional  | Limit the number of results to return (Default 100) | numeric | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.limit | numeric | 
-action\_result\.parameter\.threat\_id | string |  `abnormal threat id` 
-action\_result\.data\.\*\.abxMessageId | numeric | 
-action\_result\.data\.\*\.abxPortalUrl | string |  `url` 
-action\_result\.data\.\*\.attachmentCount | numeric | 
-action\_result\.data\.\*\.attackStrategy | string | 
-action\_result\.data\.\*\.attackType | string | 
-action\_result\.data\.\*\.attackVector | string | 
-action\_result\.data\.\*\.attackedParty | string | 
-action\_result\.data\.\*\.autoRemediated | boolean | 
-action\_result\.data\.\*\.fromAddress | string |  `email` 
-action\_result\.data\.\*\.fromName | string | 
-action\_result\.data\.\*\.impersonatedParty | string | 
-action\_result\.data\.\*\.internetMessageId | string | 
-action\_result\.data\.\*\.isRead | boolean | 
-action\_result\.data\.\*\.postRemediated | boolean | 
-action\_result\.data\.\*\.receivedTime | string | 
-action\_result\.data\.\*\.recipientAddress | string |  `email` 
-action\_result\.data\.\*\.remediationStatus | string | 
-action\_result\.data\.\*\.remediationTimestamp | string | 
-action\_result\.data\.\*\.returnPath | string |  `email` 
-action\_result\.data\.\*\.senderDomain | string |  `domain` 
-action\_result\.data\.\*\.senderIpAddress | string | 
-action\_result\.data\.\*\.sentTime | string | 
-action\_result\.data\.\*\.subject | string | 
-action\_result\.data\.\*\.summaryInsights | string | 
-action\_result\.data\.\*\.threatId | string |  `abnormal threat id` 
-action\_result\.data\.\*\.toAddresses | string |  `email` 
-action\_result\.data\.\*\.urlCount | numeric | 
-action\_result\.data\.\*\.urls | string |  `url` 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.limit | numeric |  |   1 
+action_result.parameter.threat_id | string |  `abnormal threat id`  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.data.\*.abxMessageId | numeric |  |   1234569002995890000 
+action_result.data.\*.abxPortalUrl | string |  `url`  |   https://portal.abnormalsecurity.com/home/threat-center/remediation-history/1234559002995890248 
+action_result.data.\*.attachmentCount | numeric |  |   0 
+action_result.data.\*.attackStrategy | string |  |   Unknown Sender 
+action_result.data.\*.attackType | string |  |   Phishing: Credential 
+action_result.data.\*.attackVector | string |  |   Link 
+action_result.data.\*.attackedParty | string |  |   VIP 
+action_result.data.\*.autoRemediated | boolean |  |   False 
+action_result.data.\*.fromAddress | string |  `email`  |   test@test.com 
+action_result.data.\*.fromName | string |  |   me 
+action_result.data.\*.impersonatedParty | string |  |   None / Others 
+action_result.data.\*.internetMessageId | string |  |   <CAKL+we=ABCD+pCxrvvFeHpx=Vto4TOZX0cB09GmLnugUZi7u6A@mail.gmail.com> 
+action_result.data.\*.isRead | boolean |  |   True  False 
+action_result.data.\*.postRemediated | boolean |  |   False 
+action_result.data.\*.receivedTime | string |  |   2022-07-26T06:23:08Z 
+action_result.data.\*.recipientAddress | string |  `email`  |   test@test.com 
+action_result.data.\*.remediationStatus | string |  |   Remediation Attempted 
+action_result.data.\*.remediationTimestamp | string |  |  
+action_result.data.\*.returnPath | string |  `email`  |   test@test.com 
+action_result.data.\*.senderDomain | string |  `domain`  |   test.com 
+action_result.data.\*.senderIpAddress | string |  |  
+action_result.data.\*.sentTime | string |  |   2022-07-26T06:22:52Z 
+action_result.data.\*.subject | string |  |   book a time in my calendar 
+action_result.data.\*.summaryInsights | string |  |   Unusual Sender 
+action_result.data.\*.threatId | string |  `abnormal threat id`  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.data.\*.toAddresses | string |  `email`  |   test@test.com 
+action_result.data.\*.urlCount | numeric |  |   1 
+action_result.data.\*.urls | string |  `url`  |   https://mailinc.yolasite.com/ 
+action_result.summary | string |  |  
+action_result.message | string |  |   Fetched threat data successfully 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'list abuse mailboxes'
 Fetch the list of abuse mailbox IDs
@@ -121,18 +121,18 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**limit** |  optional  | Limit the number of results to return \(Default 100\) | numeric | 
+**limit** |  optional  | Limit the number of results to return (Default 100) | numeric | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.limit | numeric | 
-action\_result\.data\.\*\.campaignId | string | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.limit | numeric |  |   10 
+action_result.data.\*.campaignId | string |  |   fff51768-c446-34e1-97a8-9802c29c3ebd 
+action_result.summary | string |  |  
+action_result.message | string |  |   Abuse mailboxes found 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'update threat status'
 Change the status of threat with given threat ID
@@ -143,21 +143,21 @@ Read only: **False**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**threat\_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
+**threat_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
 **action** |  required  | Action to update status for threat | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.action | string | 
-action\_result\.parameter\.threat\_id | string |  `abnormal threat id` 
-action\_result\.data\.\*\.action\_id | string |  `abnormal action id` 
-action\_result\.data\.\*\.status\_url | string |  `url` 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.action | string |  |   remediate  unremediate 
+action_result.parameter.threat_id | string |  `abnormal threat id`  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.data.\*.action_id | string |  `abnormal action id`  |   c40a436e-aec8-48db-9188-58198f8f9555 
+action_result.data.\*.status_url | string |  `url`  |   https://api.abnormalplatform.com/v1/threats/ecfaa385-a6e8-49af-42ba-9c5fc0e66ade/actions/c40a436e-aec8-48db-9188-58198f8f9555 
+action_result.summary | string |  |  
+action_result.message | string |  |   Status updated to unremediate successfully 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'get threat status'
 Fetch the status of threat
@@ -165,23 +165,23 @@ Fetch the status of threat
 Type: **investigate**  
 Read only: **True**
 
-This action needs an action ID from update threat status action\.
+This action needs an action ID from update threat status action.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**threat\_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
-**action\_id** |  required  | A UUID representing the action | string |  `abnormal action id` 
+**threat_id** |  required  | A UUID representing the threat | string |  `abnormal threat id` 
+**action_id** |  required  | A UUID representing the action | string |  `abnormal action id` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.action\_id | string |  `abnormal action id` 
-action\_result\.parameter\.threat\_id | string |  `abnormal threat id` 
-action\_result\.data\.\*\.description | string | 
-action\_result\.data\.\*\.status | string | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.action_id | string |  `abnormal action id`  |   c40a436e-aec8-48db-9188-58198f8f9555 
+action_result.parameter.threat_id | string |  `abnormal threat id`  |   1234567b-90c3-be27-93cb-cfdecabcde9a 
+action_result.data.\*.description | string |  |   The request was completed successfully 
+action_result.data.\*.status | string |  |   done 
+action_result.summary | string |  |  
+action_result.message | string |  |   Fetched status successfully 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 
