@@ -12,7 +12,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022 Splunk Inc.",
-    "app_version": "1.0.2",
+    "app_version": "1.0.3",
     "utctime_updated": "2022-07-20T08:37:32.884231Z",
     "package_name": "phantom_abnormalsecurity",
     "main_module": "abnormalsecurity_connector.py",
