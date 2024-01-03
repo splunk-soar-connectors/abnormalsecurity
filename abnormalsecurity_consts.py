@@ -1,6 +1,6 @@
 # File: abnormalsecurity_consts.py
 #
-# Copyright (c) 2022 Splunk Inc.
+# Copyright (c) 2024 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ ABNORMAL_JSON_URL_OAuth = "url"
 ABNORMAL_AUTHORIZATION_TOKEN = "access_token"
 
 # responses
-ABNORMAL_ERROR_EMPTY_RESPONSE = "Status Code {code}. Empty response and no information in the header"
-ABNORMAL_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters"
-ABNORMAL_INVALID_INTEGER_MESSAGE = "Please provide a valid integer value in the {key} parameter"
+ABNORMAL_ERR_EMPTY_RESPONSE = "Status Code {code}. Empty response and no information in the header"
+ABNORMAL_ERR_MSG_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters"
+ABNORMAL_INVALID_INTEGER_MSG = "Please provide a valid integer value in the {key} parameter"
 REQUEST_TIMEOUT = 60
 
 # endpoints

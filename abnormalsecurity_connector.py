@@ -1,6 +1,6 @@
 # File: abnormalsecurity_connector.py
 #
-# Copyright (c) 2022 Splunk Inc.
+# Copyright (c) 2024 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -68,23 +68,23 @@ class AbnormalSecurityConnector(BaseConnector):
         if parameter is not None:
             try:
                 if not float(parameter).is_integer():
-                    return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MESSAGE.format(key=key)), None
+                    return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MSG.format(key=key)), None
 
                 parameter = int(parameter)
             except Exception as ex:
                 return action_result.set_status(
                     phantom.APP_ERROR,
                     "{}: {}".format(
-                        ABNORMAL_INVALID_INTEGER_MESSAGE.format(key=key),
+                        ABNORMAL_INVALID_INTEGER_MSG.format(key=key),
                         self._get_error_message_from_exception(ex))
                 ), None
 
             if key == 'Limit' and parameter == -1:
                 return phantom.APP_SUCCESS, parameter
             if parameter < 0:
-                return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MESSAGE.format(key=key)), None
+                return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MSG.format(key=key)), None
             if not allow_zero and parameter == 0:
-                return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MESSAGE.format(key=key)), None
+                return action_result.set_status(phantom.APP_ERROR, ABNORMAL_INVALID_INTEGER_MSG.format(key=key)), None
 
         return phantom.APP_SUCCESS, parameter
 
@@ -98,7 +98,7 @@ class AbnormalSecurityConnector(BaseConnector):
         if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, "Status code: {}".format(response.status_code))
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERROR_EMPTY_RESPONSE.format(code=response.status_code)), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, ABNORMAL_ERR_EMPTY_RESPONSE.format(code=response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
         # An html response, treat it like an error
@@ -186,7 +186,7 @@ class AbnormalSecurityConnector(BaseConnector):
         """
 
         error_code = None
-        error_msg = ABNORMAL_ERROR_MESSAGE_UNAVAILABLE
+        error_msg = ABNORMAL_ERR_MSG_UNAVAILABLE
 
         self.error_print("Traceback: {}".format(traceback.format_stack()))
         try:
