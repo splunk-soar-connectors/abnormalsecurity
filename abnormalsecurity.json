@@ -12,8 +12,8 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022-2024 Splunk Inc.",
-    "app_version": "1.0.3",
-    "utctime_updated": "2022-07-20T08:37:32.884231Z",
+    "app_version": "1.0.4",
+    "utctime_updated": "2024-01-29T07:03:54.000000Z",
     "package_name": "phantom_abnormalsecurity",
     "main_module": "abnormalsecurity_connector.py",
     "min_phantom_version": "5.3.0",
@@ -767,7 +767,7 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.4.1-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
             }
         ]
     }
