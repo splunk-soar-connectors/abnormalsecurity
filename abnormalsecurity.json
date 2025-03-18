@@ -11,7 +11,7 @@
     "fips_compliant": false,
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2022-2024 Splunk Inc.",
+    "license": "Copyright (c) 2022-2025 Splunk Inc.",
     "app_version": "1.0.4",
     "utctime_updated": "2024-01-29T07:03:54.000000Z",
     "package_name": "phantom_abnormalsecurity",
