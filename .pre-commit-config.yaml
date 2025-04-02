@@ -52,8 +52,12 @@ repos:
     rev: main
     hooks:
       - id: build-docs
+        args: ['.']
       - id: copyright
-      # - id: package-app-dependencies
-      # - id: notice-file
+        args: ['.']
+      - id: package-app-dependencies
+      - id: notice-file
       - id: release-notes
+        args: ['.']
       - id: static-tests
+        args: ['.']
