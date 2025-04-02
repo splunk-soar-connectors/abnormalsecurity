@@ -1,3 +1,3 @@
 **Unreleased**
 
-* fix: Workflow file update
+* fix: Workflow file updating
