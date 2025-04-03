@@ -57,6 +57,7 @@ repos:
         args: ['.']
       - id: package-app-dependencies
       - id: notice-file
+        args: ['.']
       - id: release-notes
         args: ['.']
       - id: static-tests
