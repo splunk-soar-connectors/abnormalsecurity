@@ -4,7 +4,7 @@ Publisher: Splunk \
 Connector Version: 1.0.4 \
 Product Vendor: Abnormal Security \
 Product Name: Abnormal Security \
-Minimum Product Version: 5.3.0
+Minimum Product Version: 6.3.0
 
 This app integrates with Abnormal Security to support various generic and investigative actions
 
