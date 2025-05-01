@@ -1,7 +1,7 @@
 # Abnormal Security
 
 Publisher: Splunk \
-Connector Version: 1.0.4 \
+Connector Version: 1.0.5 \
 Product Vendor: Abnormal Security \
 Product Name: Abnormal Security \
 Minimum Product Version: 6.3.0
