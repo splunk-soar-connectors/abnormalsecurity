@@ -741,10 +741,5 @@
             ],
             "versions": "EQ(*)"
         }
-    ],
-    "directory": "abnormalsecurity_c3b48516-11cc-44b6-ba42-ef44e8fb28eb",
-    "version": 1,
-    "appname": "-",
-    "executable": "spawn3",
-    "disabled": false
+    ]
 }
