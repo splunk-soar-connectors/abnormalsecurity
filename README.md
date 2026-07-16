@@ -1,9 +1,9 @@
 # Abnormal Security
 
-Publisher: Splunk \
-Connector Version: 1.0.7 \
-Product Vendor: Abnormal Security \
-Product Name: Abnormal Security \
+Publisher: Splunk <br>
+Connector Version: 1.0.7 <br>
+Product Vendor: Abnormal Security <br>
+Product Name: Abnormal Security <br>
 Minimum Product Version: 6.3.0
 
 This app integrates with Abnormal Security to support various generic and investigative actions
@@ -19,18 +19,18 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[list threats](#action-list-threats) - Fetch the list of threat IDs which are in threat log \
-[get threat details](#action-get-threat-details) - List threat details with the given threat ID \
-[list abuse mailboxes](#action-list-abuse-mailboxes) - Fetch the list of abuse mailbox IDs \
-[update threat status](#action-update-threat-status) - Change the status of threat with given threat ID \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[list threats](#action-list-threats) - Fetch the list of threat IDs which are in threat log <br>
+[get threat details](#action-get-threat-details) - List threat details with the given threat ID <br>
+[list abuse mailboxes](#action-list-abuse-mailboxes) - Fetch the list of abuse mailbox IDs <br>
+[update threat status](#action-update-threat-status) - Change the status of threat with given threat ID <br>
 [get threat status](#action-get-threat-status) - Fetch the status of threat
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -45,7 +45,7 @@ No Output
 
 Fetch the list of threat IDs which are in threat log
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -71,7 +71,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 List threat details with the given threat ID
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -125,7 +125,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Fetch the list of abuse mailbox IDs
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -150,7 +150,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Change the status of threat with given threat ID
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -178,7 +178,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Fetch the status of threat
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action needs an action ID from update threat status action.
@@ -208,7 +208,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

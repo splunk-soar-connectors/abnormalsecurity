@@ -1,6 +1,6 @@
 # File: abnormalsecurity_connector.py
 #
-# Copyright (c) 2022-2025 Splunk Inc.
+# Copyright (c) 2022-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -341,7 +341,7 @@ class AbnormalSecurityConnector(BaseConnector):
 
         self.save_progress("Connecting to endpoint")
         # make rest call
-        ret_val, response = self._make_rest_call(action_result, ABNORMAL_GET_THREATS, params=param)
+        ret_val, _response = self._make_rest_call(action_result, ABNORMAL_GET_THREATS, params=param)
 
         if phantom.is_fail(ret_val):
             self.save_progress("Test Connectivity Failed")
