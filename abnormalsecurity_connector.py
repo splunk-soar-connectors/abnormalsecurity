@@ -1,6 +1,6 @@
 # File: abnormalsecurity_connector.py
 #
-# Copyright (c) 2022-2025 Splunk Inc.
+# Copyright (c) 2022-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 
 import json
 import traceback
+from urllib.parse import quote
 
 # Phantom App imports
 import phantom.app as phantom
@@ -276,7 +277,8 @@ class AbnormalSecurityConnector(BaseConnector):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        resp = self._paginator(action_result, "{}/{}".format(ABNORMAL_GET_THREATS, param.get("threat_id")), param, "messages")
+        threat_id = quote(param["threat_id"], safe="")
+        resp = self._paginator(action_result, f"{ABNORMAL_GET_THREATS}/{threat_id}", param, "messages")
         if resp is None:
             return action_result.get_status()
 
@@ -308,7 +310,8 @@ class AbnormalSecurityConnector(BaseConnector):
         action_status = param.get("action")
         if action_status not in ["remediate", "unremediate"]:
             return action_result.set_status(phantom.APP_ERROR, "Invalid action is given")
-        endpoint = "{threats}/{threatid}".format(threats=ABNORMAL_GET_THREATS, threatid=param.get("threat_id"))
+        threat_id = quote(param["threat_id"], safe="")
+        endpoint = f"{ABNORMAL_GET_THREATS}/{threat_id}"
 
         data = {"action": action_status}
 
@@ -324,7 +327,9 @@ class AbnormalSecurityConnector(BaseConnector):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        endpoint = "{}/{}/{}/{}".format(ABNORMAL_GET_THREATS, param.get("threat_id"), ABNORMAL_GET_ACTION_STATUS, param.get("action_id"))
+        threat_id = quote(param["threat_id"], safe="")
+        action_id = quote(param["action_id"], safe="")
+        endpoint = f"{ABNORMAL_GET_THREATS}/{threat_id}/{ABNORMAL_GET_ACTION_STATUS}/{action_id}"
         ret_val, resp = self._make_rest_call(action_result, endpoint)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
@@ -341,7 +346,7 @@ class AbnormalSecurityConnector(BaseConnector):
 
         self.save_progress("Connecting to endpoint")
         # make rest call
-        ret_val, response = self._make_rest_call(action_result, ABNORMAL_GET_THREATS, params=param)
+        ret_val, _response = self._make_rest_call(action_result, ABNORMAL_GET_THREATS, params=param)
 
         if phantom.is_fail(ret_val):
             self.save_progress("Test Connectivity Failed")
