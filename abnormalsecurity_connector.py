@@ -16,6 +16,7 @@
 import json
 import traceback
 from urllib.parse import quote
+from uuid import UUID
 
 # Phantom App imports
 import phantom.app as phantom
@@ -58,6 +59,18 @@ class AbnormalSecurityConnector(BaseConnector):
 
     def finalize(self):
         return phantom.APP_SUCCESS
+
+    @staticmethod
+    def _validate_uuid(action_result, value, name):
+        try:
+            normalized_value = str(UUID(value))
+        except (AttributeError, TypeError, ValueError):
+            return action_result.set_status(phantom.APP_ERROR, f"Invalid {name}: expected a UUID"), None
+
+        if normalized_value != value.lower():
+            return action_result.set_status(phantom.APP_ERROR, f"Invalid {name}: expected a canonical UUID"), None
+
+        return phantom.APP_SUCCESS, normalized_value
 
     def _validate_integer(self, action_result, parameter, key, allow_zero=False):
         if parameter is not None:
@@ -277,7 +290,10 @@ class AbnormalSecurityConnector(BaseConnector):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        threat_id = quote(param["threat_id"], safe="")
+        ret_val, threat_id = self._validate_uuid(action_result, param["threat_id"], "threat ID")
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+        threat_id = quote(threat_id, safe="")
         resp = self._paginator(action_result, f"{ABNORMAL_GET_THREATS}/{threat_id}", param, "messages")
         if resp is None:
             return action_result.get_status()
@@ -310,7 +326,10 @@ class AbnormalSecurityConnector(BaseConnector):
         action_status = param.get("action")
         if action_status not in ["remediate", "unremediate"]:
             return action_result.set_status(phantom.APP_ERROR, "Invalid action is given")
-        threat_id = quote(param["threat_id"], safe="")
+        ret_val, threat_id = self._validate_uuid(action_result, param["threat_id"], "threat ID")
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+        threat_id = quote(threat_id, safe="")
         endpoint = f"{ABNORMAL_GET_THREATS}/{threat_id}"
 
         data = {"action": action_status}
@@ -327,8 +346,14 @@ class AbnormalSecurityConnector(BaseConnector):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        threat_id = quote(param["threat_id"], safe="")
-        action_id = quote(param["action_id"], safe="")
+        ret_val, threat_id = self._validate_uuid(action_result, param["threat_id"], "threat ID")
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+        ret_val, action_id = self._validate_uuid(action_result, param["action_id"], "action ID")
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+        threat_id = quote(threat_id, safe="")
+        action_id = quote(action_id, safe="")
         endpoint = f"{ABNORMAL_GET_THREATS}/{threat_id}/{ABNORMAL_GET_ACTION_STATUS}/{action_id}"
         ret_val, resp = self._make_rest_call(action_result, endpoint)
         if phantom.is_fail(ret_val):
